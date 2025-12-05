@@ -1,0 +1,307 @@
+{
+  "info": {
+    "name": "Transactional Ledger Service API",
+    "description": "API collection for the Transactional Ledger Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create Account - USD",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"user123\",\n  \"currency\": \"USD\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/accounts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "accounts"]
+            }
+          }
+        },
+        {
+          "name": "Create Account - INR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"user123\",\n  \"currency\": \"INR\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/accounts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "accounts"]
+            }
+          }
+        },
+        {
+          "name": "Get Account by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/accounts/{{account_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "accounts", "{{account_id}}"],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Deposit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"{{account_id}}\",\n  \"type\": \"DEPOSIT\",\n  \"amount\": 1000.50,\n  \"description\": \"Initial deposit\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions"]
+            }
+          }
+        },
+        {
+          "name": "Withdrawal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"{{account_id}}\",\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 200.25,\n  \"description\": \"ATM withdrawal\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions"]
+            }
+          }
+        },
+        {
+          "name": "Get Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/{{account_id}}/balance",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions", "{{account_id}}", "balance"],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Transaction History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/{{account_id}}/history?page=1&limit=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions", "{{account_id}}", "history"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transfers",
+      "item": [
+        {
+          "name": "Internal Transfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from_account_id\": \"{{from_account_id}}\",\n  \"to_account_id\": \"{{to_account_id}}\",\n  \"amount\": 300.00,\n  \"description\": \"Payment for services\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/transfer",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions", "transfer"]
+            }
+          }
+        },
+        {
+          "name": "Transfer with Idempotency Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "unique-key-12345"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from_account_id\": \"{{from_account_id}}\",\n  \"to_account_id\": \"{{to_account_id}}\",\n  \"amount\": 100.00\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/transfer",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions", "transfer"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error Scenarios",
+      "item": [
+        {
+          "name": "Insufficient Funds",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"{{account_id}}\",\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 10000.00\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "transactions"]
+            }
+          }
+        },
+        {
+          "name": "Account Not Found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/accounts/00000000-0000-0000-0000-000000000000",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "accounts", "00000000-0000-0000-0000-000000000000"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "account_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      "key": "from_account_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      "key": "to_account_id",
+      "value": "770e8400-e29b-41d4-a716-446655440002"
+    }
+  ]
+}
+
